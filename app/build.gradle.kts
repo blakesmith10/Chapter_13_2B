@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.bignerdranch.andriod.criminalintent"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.bignerdranch.andriod.criminalintent"
