@@ -16,6 +16,7 @@ kspVersion = "2.0.0-1.0.22"
 roomCompiler = "2.6.1"
 moshiKotlinCodegen = "1.14.0"
 kotlinxCoroutinesCore = "1.8.0"
+navigationFragmentKtx = "2.8.4"
 
 
 
@@ -40,8 +41,12 @@ moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", ver
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesCore" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
 
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id  = "com.google.devtools.ksp", version.ref = "kspVersion" }
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragmentKtx"}
