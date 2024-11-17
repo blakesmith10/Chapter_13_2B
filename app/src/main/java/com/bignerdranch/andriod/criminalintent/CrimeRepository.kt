@@ -3,26 +3,39 @@ package com.bignerdranch.andriod.criminalintent
 import android.content.Context
 import androidx.room.Room
 import com.bignerdranch.andriod.criminalintent.database.CrimeDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
-import java.util.UUID
+import kotlinx.coroutines.launch
+import java.util.*
 
 private const val DATABASE_NAME = "crime-database"
 
-class CrimeRepository private constructor(context: Context) {
+class CrimeRepository private constructor(
+    context:Context,
+    private val coroutineScope : CoroutineScope= GlobalScope
+) {
 
-    private val database:CrimeDatabase=Room
-            .databaseBuilder(
-                context.applicationContext,
-                CrimeDatabase::class.java,
-                DATABASE_NAME
-            )
-            .createFromAsset(DATABASE_NAME)
-            .build()
+    private val database: CrimeDatabase = Room
+        .databaseBuilder(
+            context.applicationContext,
+            CrimeDatabase::class.java,
+            DATABASE_NAME
+        )
+        .createFromAsset(DATABASE_NAME)
+        .build()
 
-   // suspend fun getCrimes():List<Crime> = database.CrimeDao().getCrimes()
-     fun getCrimes(): Flow<List<Crime>> = database.CrimeDao().getCrimes()
+    suspend fun getCrimes(): Flow<List<Crime>> = database.CrimeDao().getCrimes()
 
-    suspend fun getCrime(id:UUID):Crime = database.CrimeDao().getCrime(id)
+    suspend fun getCrime(id: UUID): Crime = database.CrimeDao().getCrime(id)
+
+    fun updateCrime(crime:Crime){
+        coroutineScope.launch {
+
+            database.CrimeDao().updateCrime(crime)
+        }
+
+    }
 
 
     companion object {
@@ -34,9 +47,9 @@ class CrimeRepository private constructor(context: Context) {
             }
         }
 
-
-    fun get(): CrimeRepository {
-        return INSTANCE ?: throw IllegalStateException("CrimeRepository must be initialized")
+        fun get(): CrimeRepository {
+            return INSTANCE
+                ?: throw IllegalStateException("CrimeRepository must be initialized")
         }
     }
 }
